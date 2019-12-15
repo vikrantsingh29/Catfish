@@ -1,5 +1,5 @@
 package org.dice_research.opal.catfish;
-// @author Aamir Mohammed 
+// @author Aamir Mohammed   
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
