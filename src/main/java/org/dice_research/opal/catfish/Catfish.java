@@ -6,8 +6,9 @@ import org.apache.logging.log4j.Logger;
 import org.dice_research.opal.common.interfaces.JenaModelProcessor;
 import org.dice_research.opal.common.interfaces.ModelProcessor;
 
-public class Catfish implements JenaModelProcessor {
-	
+@SuppressWarnings("deprecation")
+public class Catfish implements ModelProcessor, JenaModelProcessor {
+
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	@Override
@@ -26,11 +27,8 @@ public class Catfish implements JenaModelProcessor {
 	 */
 	@Deprecated
 	@Override
-	//
 	public Model process(Model model, String datasetUri) throws Exception {
-
-	ModelHeterogeneousLicenseCleaner LicenseCleaner = new ModelHeterogeneousLicenseCleaner();
-	return LicenseCleaner.ModelLicenCleaner(model,datasetUri);
+		processModel(model, datasetUri);
+		return model;
 	}
-	
 }
