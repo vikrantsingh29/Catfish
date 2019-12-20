@@ -26,19 +26,11 @@ public class Catfish implements JenaModelProcessor {
 	 */
 	@Deprecated
 	@Override
+	//
 	public Model process(Model model, String datasetUri) throws Exception {
-		processModel(model, datasetUri);
-		return model;
+
+	ModelHeterogeneousLicenseCleaner LicenseCleaner = new ModelHeterogeneousLicenseCleaner();
+	return LicenseCleaner.ModelLicenCleaner(model,datasetUri);
 	}
 	
-	
-
-	// private static final Logger LOGGER = LogManager.getLogger();
-//
-//	public Model process(Model model, String datasetUri) throws Exception {
-//
-//		ModelHeterogeneousLicenseCleaner LicenseCleaner = new ModelHeterogeneousLicenseCleaner();
-//		return LicenseCleaner.ModelLicenCleaner(model,datasetUri);
-//	}
-
 }
