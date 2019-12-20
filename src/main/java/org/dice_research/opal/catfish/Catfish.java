@@ -28,7 +28,8 @@ public class Catfish implements ModelProcessor, JenaModelProcessor {
 	@Deprecated
 	@Override
 	public Model process(Model model, String datasetUri) throws Exception {
-		processModel(model, datasetUri);
-		return model;
+
+		ModelHeterogeneousLicenseCleaner LicenseCleaner = new ModelHeterogeneousLicenseCleaner();
+		return LicenseCleaner.ModelLicenCleaner(model,datasetUri);
 	}
 }
