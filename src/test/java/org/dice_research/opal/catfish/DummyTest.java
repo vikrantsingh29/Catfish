@@ -15,7 +15,7 @@ public class DummyTest {
 		Model model = ModelFactory.createDefaultModel();
 		String datasetUri = "https://example.org/dataset1";
 
-		new Catfish().processModel(model, datasetUri);
+		new Catfish().process(model, datasetUri);
 
 		Assert.assertEquals("Model is empty", 0, model.size());
 
