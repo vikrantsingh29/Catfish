@@ -26,7 +26,8 @@
 			<artifactId>common</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		
+
+
 		<!-- Logging -->
 
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
