@@ -75,5 +75,9 @@
 			<url>http://maven.aksw.org/archiva/repository/snapshots</url>
 		</repository>
 	</repositories>
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> f34b9467bbed8150a5f12e1c0d15981b7cfd65f4
 </project>
