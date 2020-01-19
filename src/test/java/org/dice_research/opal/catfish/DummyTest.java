@@ -19,18 +19,18 @@ public class DummyTest {
 	@Test
 	public void test() throws Exception {
 		Model model = ModelFactory.createDefaultModel();
-
+		
 		String datasetUri = "https://example.org/dataset1";
 		Resource dataset = ResourceFactory.createResource();
 		model.add(dataset, RDF.type, DCAT.Dataset);
-
+		
 		String dateString = "6.11.2019";
 		Literal date = ResourceFactory.createPlainLiteral(dateString);
 		model.addLiteral(dataset, DCTerms.date, date);
 
 		Catfish catfish = new Catfish();
 		Model processedModel = catfish.process(model, datasetUri);
-
+		
 		// TODO: Test will fail
 		
 		Assert.assertFalse("Contains wrong date format",
