@@ -10,11 +10,15 @@ import org.dice_research.opal.common.interfaces.ModelProcessor;
 public class Catfish implements ModelProcessor, JenaModelProcessor {
 
 	private static final Logger LOGGER = LogManager.getLogger();
+	
+	ModelHeterogeneousLicenseCleaner LicenseCleaner = new ModelHeterogeneousLicenseCleaner();
 
 	@Override
 	public void processModel(Model model, String datasetUri) throws Exception {
 
 		// TODO: clean model
+		
+		LicenseCleaner.ModelLicenCleaner(model, datasetUri);
 
 		if (model.isEmpty()) {
 			LOGGER.warn("Model is empty.");
@@ -28,8 +32,7 @@ public class Catfish implements ModelProcessor, JenaModelProcessor {
 	@Deprecated
 	@Override
 	public Model process(Model model, String datasetUri) throws Exception {
-
-		ModelHeterogeneousLicenseCleaner LicenseCleaner = new ModelHeterogeneousLicenseCleaner();
-		return LicenseCleaner.ModelLicenCleaner(model,datasetUri);
+		processModel(model, datasetUri);
+		return model;
 	}
 }
