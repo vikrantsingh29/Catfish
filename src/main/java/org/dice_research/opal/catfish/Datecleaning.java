@@ -45,66 +45,73 @@ public class Datecleaning {
 		return valid_date;
 	}
 
-	public void processModel(Model model, String dataseturi) throws Exception {
+	public Model processModel(Model model, String dataseturi) throws Exception {
 		if (model.isEmpty()) {
 			LOGGER.warn("Model is empty.");
 		}
 
+		ArrayList<Statement> statements = new ArrayList<Statement>();
+		ArrayList<String> new_dates = new ArrayList<String>();
+
 		StmtIterator iterator = model.listStatements(new SimpleSelector(null, DCTerms.issued, (RDFNode) null));
-		String datasetUri =  null;
+		String datasetUri = null;
 		while (iterator.hasNext()) {
 
 			Statement my_st = iterator.nextStatement();
 			RDFNode dateSet = my_st.getObject();
-			datasetUri = dateSet.toString();
-				
-		ArrayList<Statement> statements = new ArrayList<Statement>();
+			String date_to_check = dateSet.toString();
 
-		ArrayList<String> new_dates = new ArrayList<String>();
-        // 2018-07-09T09:40:19.518623
-		if ((datasetUri.matches(DateTimeZone1))) {
-			String new_date = checkDate(datasetUri, "yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-			new_dates.add(new_date);
-		}
-		
-		// Format 2018-07-09 09:40:19.518623
-		else if ((datasetUri.matches(DateTimeZone2))) {
-			String new_date = checkDate(datasetUri, "yyyy-MM-dd HH:mm:ss.SSSSSS");
-			new_dates.add(new_date);
-		}
+			// 2018-07-09T09:40:19.518623
+			if ((date_to_check.matches(DateTimeZone1))) {
+				String new_date = checkDate(date_to_check, "yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+				new_dates.add(new_date);
+				statements.add(my_st);
+			}
 
-		// Date format 31.12.1990
-		else if ((datasetUri.matches(dd_mm_yyyy))) {
-			String new_date = checkDate(datasetUri, "dd.MM.yyyy");
-			new_dates.add(new_date);
-		}
+			// Format 2018-07-09 09:40:19.518623
+			else if ((date_to_check.matches(DateTimeZone2))) {
+				String new_date = checkDate(date_to_check, "yyyy-MM-dd HH:mm:ss.SSSSSS");
+				new_dates.add(new_date);
+				statements.add(my_st);
+			}
 
-		// When date is in the format 01.01.1949 - 31.12.2017 take the latest.
-		else if ((datasetUri.matches(date1_date1)) || (datasetUri.matches(date1_date2))) {
-			String new_date = datasetUri.contains("-") ? checkDate(datasetUri.split("-")[1].trim(), "dd.MM.yyyy")
-					: checkDate(datasetUri.split("�")[1].trim(), "dd.MM.yyyy");
-			new_dates.add(new_date);
-		}
+			// Date format 31.12.1990
+			else if ((date_to_check.matches(dd_mm_yyyy))) {
+				String new_date = checkDate(date_to_check, "dd.MM.yyyy");
+				new_dates.add(new_date);
+				statements.add(my_st);
+			}
 
-		// When date is in the format of "Sat Dec 31 23:00:00 GMT 2005 � Sun Dec 31
-		// 22:59:59 GMT 2006"
-		else if (datasetUri.matches(day_month_date_time_day_month_date_time)) {
-			String new_date = checkDate(datasetUri.split("�")[1].trim(), "EEE MMM dd HH:mm:ss 'GMT' yyyy");
-			new_dates.add(new_date);
-		}
+			// When date is in the format 01.01.1949 - 31.12.2017 take the latest.
+			else if ((date_to_check.matches(date1_date1)) || (date_to_check.matches(date1_date2))) {
+				String new_date = date_to_check.contains("-")
+						? checkDate(date_to_check.split("-")[1].trim(), "dd.MM.yyyy")
+						: checkDate(date_to_check.split("�")[1].trim(), "dd.MM.yyyy");
+				new_dates.add(new_date);
+				statements.add(my_st);
+			}
 
-		// Date Clean for format like "Tue Mar 19 00:00:00 GMT 2019"
-		else if (datasetUri.matches(day_month_date_time)) {
-			String new_date = checkDate(datasetUri, "EEE MMM dd HH:mm:ss 'GMT' yyyy");
-			new_dates.add(new_date);
-		}
+			// When date is in the format of "Sat Dec 31 23:00:00 GMT 2005 � Sun Dec 31
+			// 22:59:59 GMT 2006"
+			else if (date_to_check.matches(day_month_date_time_day_month_date_time)) {
+				String new_date = checkDate(date_to_check.split("�")[1].trim(), "EEE MMM dd HH:mm:ss 'GMT' yyyy");
+				new_dates.add(new_date);
+				statements.add(my_st);
+			}
 
+			// Date Clean for format like "Tue Mar 19 00:00:00 GMT 2019"
+			else if (date_to_check.matches(day_month_date_time)) {
+				String new_date = checkDate(datasetUri, "EEE MMM dd HH:mm:ss 'GMT' yyyy");
+				new_dates.add(new_date);
+				statements.add(my_st);
+			}
+		}
 		// Update Models with two ArrayLists outside the StmtIterator
 		if (statements.size() > 0) {
 			for (int count = 0; count < statements.size(); count++) {
 				statements.get(count).changeObject(new_dates.get(count));
 			}
 		}
+		return model;
 	}
-}
 }
