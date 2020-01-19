@@ -65,23 +65,18 @@ public class Datecleaning {
 		if ((datasetUri.matches(DateTimeZone1))) {
 			String new_date = checkDate(datasetUri, "yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
 			new_dates.add(new_date);
-			System.out.println("old_date"+ datasetUri);
-			System.out.println("new_date"+ new_date);
 		}
+		
 		// Format 2018-07-09 09:40:19.518623
 		else if ((datasetUri.matches(DateTimeZone2))) {
 			String new_date = checkDate(datasetUri, "yyyy-MM-dd HH:mm:ss.SSSSSS");
 			new_dates.add(new_date);
-			System.out.println("old_date"+ datasetUri);
-			System.out.println("new_date"+ new_date);
 		}
 
 		// Date format 31.12.1990
 		else if ((datasetUri.matches(dd_mm_yyyy))) {
 			String new_date = checkDate(datasetUri, "dd.MM.yyyy");
 			new_dates.add(new_date);
-			System.out.println("old_date"+ datasetUri);
-			System.out.println("new_date"+ new_date);
 		}
 
 		// When date is in the format 01.01.1949 - 31.12.2017 take the latest.
@@ -89,8 +84,6 @@ public class Datecleaning {
 			String new_date = datasetUri.contains("-") ? checkDate(datasetUri.split("-")[1].trim(), "dd.MM.yyyy")
 					: checkDate(datasetUri.split("�")[1].trim(), "dd.MM.yyyy");
 			new_dates.add(new_date);
-			System.out.println("old_date"+ datasetUri);
-			System.out.println("new_date"+ new_date);
 		}
 
 		// When date is in the format of "Sat Dec 31 23:00:00 GMT 2005 � Sun Dec 31
@@ -98,16 +91,12 @@ public class Datecleaning {
 		else if (datasetUri.matches(day_month_date_time_day_month_date_time)) {
 			String new_date = checkDate(datasetUri.split("�")[1].trim(), "EEE MMM dd HH:mm:ss 'GMT' yyyy");
 			new_dates.add(new_date);
-			System.out.println("old_date"+ datasetUri);
-			System.out.println("new_date"+ new_date);
 		}
 
 		// Date Clean for format like "Tue Mar 19 00:00:00 GMT 2019"
 		else if (datasetUri.matches(day_month_date_time)) {
 			String new_date = checkDate(datasetUri, "EEE MMM dd HH:mm:ss 'GMT' yyyy");
 			new_dates.add(new_date);
-			System.out.println("old_date"+ datasetUri);
-			System.out.println("new_date"+ new_date);
 		}
 
 		// Update Models with two ArrayLists outside the StmtIterator
