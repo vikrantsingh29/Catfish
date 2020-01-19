@@ -10,25 +10,21 @@ import org.dice_research.opal.common.interfaces.ModelProcessor;
 public class Catfish implements ModelProcessor, JenaModelProcessor {
 
 	private static final Logger LOGGER = LogManager.getLogger();
-<<<<<<< HEAD
-	
-	ModelHeterogeneousLicenseCleaner LicenseCleaner = new ModelHeterogeneousLicenseCleaner();
-=======
+	Datecleaning dateclean = new Datecleaning();
+	ModelHeterogeneousLicenseCleaner licenseCleaner = new ModelHeterogeneousLicenseCleaner();
 	DataThemeCleaning dataThemeCleaning;
->>>>>>> d94ec20a2e720804c99dd7fdcdba7461fe8ffac3
-
-	@Override
+	
 	public void processModel(Model model, String datasetUri) throws Exception {
 
 		// TODO: clean model
 		
-		LicenseCleaner.ModelLicenCleaner(model, datasetUri);
-
 		if (model.isEmpty()) {
 			LOGGER.warn("Model is empty.");
 			return;
 		}
-
+		
+		licenseCleaner.ModelLicenCleaner(model, datasetUri);
+		dateclean.processModel(model, datasetUri);
 		dataThemeCleaning.processModel(model, datasetUri);
 	}
 
