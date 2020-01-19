@@ -23,12 +23,12 @@ public class LicenseCleaningTest {
 	@Test
 	public void test1() throws Exception {
 		
-		String datasetUri = "http://projekt-opal.de/dataset/http___europeandataportal_eu_set_data__3dff988d_59d2_415d_b2da_818e8ef3111701";
+		String datasetUri = "http://projekt-opal.de/dataset/https___europeandataportal_eu_set_data_birth_registrations_by_month_since_january_2009_to_june_2011";
 		Catfish catfish = new Catfish();
 		
 		//Current model has heterogeneous licenses
 		Model old_model = ModelFactory.createDefaultModel();
-		old_model.read(getClass().getClassLoader().getResource("LicenseCleaningTestCases/2HeterogeneousLicenses_indicate_same_license.ttl").getFile(), "TURTLE");
+		old_model.read(getClass().getClassLoader().getResource("cleaning.ttl").getFile(), "TURTLE");
         
 		ModelHomogeneousLicenseChecker check_licenses = new ModelHomogeneousLicenseChecker(); 
 		
